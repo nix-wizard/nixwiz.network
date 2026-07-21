@@ -29,15 +29,15 @@ about_object=$(escape_sed_replacement '<object type="text/html" data="/pages/abo
 about_link=$(escape_sed_replacement '/pages/about/index.html')
 sed "s/<!-- CONTENT --!>/$about_object/" ./base.html | sed "s/<!-- TITLE --!>/about/" | sed "s/<!-- LINK --!>/$about_link/" > $www_root/about.html
 
+# socials
+socials_object=$(escape_sed_replacement '<object type="text/html" data="/pages/socials/index.html"></object>')
+socials_link=$(escape_sed_replacement '/pages/socials/index.html')
+sed "s/<!-- CONTENT --!>/$socials_object/" ./base.html | sed "s/<!-- TITLE --!>/socials/" | sed "s/<!-- LINK --!>/$socials_link/" > $www_root/socials.html
+
 # sona gallery
 sonagallery_object=$(escape_sed_replacement '<object type="text/html" data="/pages/sonagallery/index.html"></object>')
 sonagallery_link=$(escape_sed_replacement '/pages/sonagallery/index.html')
-sed "s/<!-- CONTENT --!>/$sonagallery_object/" ./base.html | sed "s/<!-- TITLE --!>/sonagallery/" | sed "s/<!-- LINK --!>/$sonagallery_link/" > $www_root/sonagallery.html
-
-# socials
-escaped_socials_object=$(escape_sed_replacement '<object type="text/html" data="/pages/socials/index.html"></object>')
-escaped_socials_link=$(escape_sed_replacement '/pages/socials/index.html')
-sed "s/<!-- CONTENT --!>/$socials_object/" ./base.html | sed "s/<!-- TITLE --!>/socials/" | sed "s/<!-- LINK --!>/$socials_link/" > $www_root/index.html
+sed "s/<!-- CONTENT --!>/$sonagallery_object/" ./base.html | sed "s/<!-- TITLE --!>/sona gallery/" | sed "s/<!-- LINK --!>/$sonagallery_link/" > $www_root/sonagallery.html
 
 find "$www_root" -type d -exec chmod 755 {} \;
 find "$www_root" -type f -exec chmod 644 {} \;
