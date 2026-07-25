@@ -18,22 +18,22 @@ cd $www_root
 for dir in ./pages/*/; do
 	page=$(basename $dir)
 	if [ -f $dir/index.html ]; then
-		generate_object_page "/pages/$page/index.html" "$page" > $page.html
+		generate_include_page "/pages/$page/index.html" "$page" > $page.html
 	fi
 done
 
 # BLOG GENERATION
 # years
-generate_page "$(echo $stylesheet && generate_dirlist "./blog")" "blog" > ./blog/index.html
+generate_page "$(generate_dirlist "./blog")" "blog" > ./blog/index.html
 # months
 for year in ./blog/*/; do
-	generate_page "$(echo $stylesheet && generate_dirlist "$year")" "$(basename $year)" > "$year/index.html"
+	generate_page "$(generate_dirlist "$year")" "$(basename $year)" > "$year/index.html"
 	# days
 	for month in "$year"/*/; do
-		generate_page "$(echo $stylesheet && generate_dirlist "$month")" "$(basename $year)-$(basename $month)" > "$month/index.html"
+		generate_page "$(generate_dirlist "$month")" "$(basename $year)-$(basename $month)" > "$month/index.html"
 		# posts
 		for day in "$month"/*/; do
-			generate_page "$(echo $stylesheet && generate_dirlist "$day")" "$(basename $year)-$(basename $month)-$(basename $day)" > "$day/index.html"
+			generate_page "$(generate_dirlist "$day")" "$(basename $year)-$(basename $month)-$(basename $day)" > "$day/index.html"
 		done
 	done
 done

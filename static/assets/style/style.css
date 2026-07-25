@@ -30,6 +30,9 @@
 	shape-rendering: optimizeSpeed;
 	text-rendering: optimizeSpeed;
 	box-sizing: border-box;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
 }
 
 body {
@@ -59,6 +62,11 @@ h2 {
 h3 {
 	font-size: 22px;
 	font-family: "Terminus";
+}
+
+p {
+	white-space: pre-wrap;
+	font-size: 16px;
 }
 
 hr {
@@ -133,19 +141,99 @@ object {
 	width: 100%;
 	height: 100%;
 	padding: 0;
-	margins: 0;
+	margin: 1% 5%;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	scrollbar-width: thin;
+	scrollbar-color: #6600FF #000000;
+	font-family: "Tahoma"
 }
 
+textarea {
+	background-color: #333333;
+	color: #CCCCCC;
+	border: 1px solid #6600FF;
+}
 
 a:link {
-	color: #9933ff;
+	color: #3300ff;
 }
 
 a:visited {
-	color: #0000cc;
+	color: #9933ff;
 }
 
 #title {
 	color: white;
 	text-decoration:none;
 }
+
+code {
+	background-color: #333333;
+}
+
+.border {
+	border: 1px solid #6600FF;
+}
+
+.left {
+	float: left;
+	margin-right: 1rem;
+}
+.clear-left {
+	clear: left;
+}
+
+.right {
+	float: right;
+	margin-left: 1rem;
+}
+
+.clear-right {
+	clear: right;
+}
+
+.centered {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	justify-content: center;
+}
+
+.centered-text {
+	text-align: center;
+}
+
+.left-text {
+	text-align: left;
+}
+
+.right-text {
+	text-align: right;
+}
+
+.vertically-centered {
+	vertical-align: middle;
+}
+
+.row {
+	display: flex;
+	align-items: flex-start;
+	gap: 1rem;
+}
+
+.flex {
+	flex: 1;
+}
+
+.overflow-scroll {
+	overflow: scroll;
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
+
+.undecorated-link a {
+	text-decoration: none;
+	color: #FFFFFF;

@@ -1,6 +1,6 @@
 #/usr/bin/env bash
 
-stylesheet='<link rel="stylesheet" href="/assets/style/child.css">'
+shopt -s nullglob
 
 replace_all() {
 	placeholder=$1
@@ -22,6 +22,11 @@ generate_link()
 generate_object()
 {
 	echo "<object type=\"text/html\" data=\"$1\"></object>"
+}
+
+generate_include()
+{
+	echo "<!--#include virtual=\"$1\" -->"
 }
 
 generate_dirlist()
@@ -55,6 +60,16 @@ generate_object_page()
 	title=$2
 
 	content=$(generate_link 'headless version' "$link" && generate_object "$link")
+
+	generate_page "$content" "$title" 
+}
+
+generate_include_page()
+{
+	link=$1
+	title=$2
+
+	content=$(generate_include "$link")
 
 	generate_page "$content" "$title" 
 }
