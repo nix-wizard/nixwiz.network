@@ -1,43 +1,46 @@
 #!/usr/bin/env sh
 
-# PLEASE FEEL FREE TO KILL ME FOR THIS SCRIPT
-
 www_root=./htdocs
 
-escape_sed_replacement() {
+escape_sed_replacement()
+{
 	printf '%s\n' "$1" | sed -e 's/[\/&]/\\&/g'
 }
 
-# add static files to public
-rm -rf $www_root/*
-cp -r ./assets/ $www_root/assets
-cp -r ./share/ $www_root/share
-cp -r ./pages/ $www_root/pages
+generate_object()
+{
+	echo "<object type=\"text/html\" data=\"$1\"></object>"
+}
 
-# add robots.txt
-cat ./robots.txt > $www_root/robots.txt
+generate_page()
+{
+	content=$(escape_sed_replacement "$1")
+	link=$(escape_sed_replacement "$2")
+	title=$3
+
+	sed "s/<!-- CONTENT --!>/$content/" ./base.html | \
+	sed "s/<!-- LINK --!>/$link/" | \
+	sed "s/<!-- TITLE --!>/$title/"
+}
+
+# add static files
+if [ -d "$www_root" ]; then
+	rm -rf $www_root/*a
+else
+	mkdir $www_root
+fi
+cp -r ./static/* $www_root/
+cd $www_root
 
 # PAGES
 
-# index
-index_object=$(escape_sed_replacement '<object type="text/html" data="/pages/index/index.html"></object>')
-index_link=$(escape_sed_replacement '/pages/index/index.html')
-sed "s/<!-- CONTENT --!>/$index_object/" ./base.html | sed "s/<!-- TITLE --!>/index/" | sed "s/<!-- LINK --!>/$index_link/" > $www_root/index.html
+for dir in ./pages/*/; do
+	page=$(basename $dir)
+	if [ -f $dir/index.html ]; then
+		generate_page "$(generate_object "/pages/$page/index.html")" "/pages/$page/index.html" "$page" > $page.html
+	fi
+done
 
-# about
-about_object=$(escape_sed_replacement '<object type="text/html" data="/pages/about/index.html"></object>')
-about_link=$(escape_sed_replacement '/pages/about/index.html')
-sed "s/<!-- CONTENT --!>/$about_object/" ./base.html | sed "s/<!-- TITLE --!>/about/" | sed "s/<!-- LINK --!>/$about_link/" > $www_root/about.html
 
-# socials
-socials_object=$(escape_sed_replacement '<object type="text/html" data="/pages/socials/index.html"></object>')
-socials_link=$(escape_sed_replacement '/pages/socials/index.html')
-sed "s/<!-- CONTENT --!>/$socials_object/" ./base.html | sed "s/<!-- TITLE --!>/socials/" | sed "s/<!-- LINK --!>/$socials_link/" > $www_root/socials.html
-
-# sona gallery
-sonagallery_object=$(escape_sed_replacement '<object type="text/html" data="/pages/sonagallery/index.html"></object>')
-sonagallery_link=$(escape_sed_replacement '/pages/sonagallery/index.html')
-sed "s/<!-- CONTENT --!>/$sonagallery_object/" ./base.html | sed "s/<!-- TITLE --!>/sona gallery/" | sed "s/<!-- LINK --!>/$sonagallery_link/" > $www_root/sonagallery.html
-
-find "$www_root" -type d -exec chmod 755 {} \;
-find "$www_root" -type f -exec chmod 644 {} \;
+find . -type d -exec chmod 755 {} \;
+find . -type f -exec chmod 644 {} \;
