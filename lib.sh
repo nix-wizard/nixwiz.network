@@ -59,6 +59,7 @@ generate_object_page()
 	link=$1
 	title=$2
 
+	content=$(generate_object "$link")
 
 	generate_page "$content" "$title" 
 }
@@ -68,7 +69,7 @@ generate_include_page()
 	link=$1
 	title=$2
 
-	content=$(generate_link 'headless version' "$link" && generate_include "$link")
+	content=$(generate_include "$link")
 
 	generate_page "$content" "$title" 
 }
