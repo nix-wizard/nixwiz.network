@@ -19,11 +19,6 @@ generate_link()
 	echo "<a href=\"$2\">$1</a>"
 }
 
-generate_object()
-{
-	echo "<object type=\"text/html\" data=\"$1\"></object>"
-}
-
 generate_include()
 {
 	echo "<!--#include virtual=\"$1\" -->"
@@ -52,24 +47,4 @@ generate_page()
 
 	replace_all "<!-- CONTENT -->" "$content" < ./base.html | \
 	replace_all "<!-- TITLE -->" "$2"
-}
-
-generate_object_page()
-{
-	link=$1
-	title=$2
-
-	content=$(generate_object "$link")
-
-	generate_page "$content" "$title" 
-}
-
-generate_include_page()
-{
-	link=$1
-	title=$2
-
-	content=$(generate_include "$link")
-
-	generate_page "$content" "$title" 
 }
