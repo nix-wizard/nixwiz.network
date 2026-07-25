@@ -19,6 +19,11 @@ generate_link()
 	echo "<a href=\"$2\">$1</a>"
 }
 
+generate_include()
+{
+	echo "<!--#include virtual=\"$1\" -->"
+}
+
 generate_dirlist()
 {
 	for dir in "$1"/*/; do
