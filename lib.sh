@@ -1,38 +1,51 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 shopt -s nullglob
 
 replace_all() {
-	placeholder=$1
-	replacement=$2
-	content=$(cat)
+	local placeholder=$1
+	local replacement=$2
+	local content
+
+	replacement=${replacement//&/\\&}
+	content=$(</dev/stdin)
 	printf '%s\n' "${content//$placeholder/$replacement}"
 }
 
 generate_tag()
 {
-	echo "<$1>$2</$1>"
+	local tag="$1"
+	local content="$2"
+
+	printf '<%s>%s</%s>\n' "$tag" "$content" "$tag"
 }
 
 generate_link()
 {
-	echo "<a href=\"$2\">$1</a>"
+	local content="$1"
+	local href="$2"
+
+	printf '<a href="%s">%s</a>' "$href" "$content"
 }
 
 generate_include()
 {
-	echo "<!--#include virtual=\"$1\" -->"
+	local page="$1"
+
+	printf '<!--#include virtual="%s" -->' "$page"
 }
 
 generate_dirlist()
 {
-	for dir in "$1"/*/; do
-		dirname=$(basename $dir)
+	local directory="$1"
+
+	for dir in "$directory"/*/; do
+		local dirname=$(basename $dir)
 		generate_tag h2 "$(generate_link "./$dirname/" "./$dirname/")"
 		echo "<br>"
 	done
-	for file in "$1"/*; do
-		filename=$(basename $file)
+	for file in "$directory"/*; do
+		local filename=$(basename $file)
 		if [ -f "$file" ] && [ "$filename" != "index.html" ]; then
 			generate_tag h2 "$(generate_link "./$filename" "./$filename")"
 			echo "<br>"
@@ -42,9 +55,9 @@ generate_dirlist()
 
 generate_page()
 {
-	content="$1"
-	title="$2"
+	local content="$1"
+	local title="$2"
 
 	replace_all "<!-- CONTENT -->" "$content" < ./base.html | \
-	replace_all "<!-- TITLE -->" "$2"
+	replace_all "<!-- TITLE -->" "$title"
 }
