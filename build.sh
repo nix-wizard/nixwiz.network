@@ -49,7 +49,7 @@ find ./blog/ -type f -name 'post.html' | sort -r | while IFS= read -r file; do
 	dir=$(dirname "$file")
 	title=$(<"$dir/title")
 	date=$(<"$dir/date")
-	postdir="/blog/$(printf '%s\n' "$date" | replace_all "-" "/")/$(basename "$dir")/" # there has gotta be a better way to do this
+	postdir="$(path_to_url "$dir")"
 	generate_tag li "$(generate_tag h2 "$(generate_link "$(printf '%s\n' "$date") - $(printf '%s\n' "$title")" "$postdir")")" >> ./pages/blog/index.html
 done
 printf '</ul>\n' >> ./pages/blog/index.html

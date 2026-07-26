@@ -3,7 +3,8 @@
 set -euo pipefail
 shopt -s nullglob
 
-replace_all() {
+replace_all()
+{
 	local placeholder=$1
 	local replacement=$2
 	local content
@@ -11,6 +12,12 @@ replace_all() {
 	replacement=${replacement//&/\\&}
 	content=$(</dev/stdin)
 	printf '%s\n' "${content//$placeholder/$replacement}"
+}
+
+path_to_url()
+{
+	string="$1"
+	printf '%s' "${string:1}"
 }
 
 generate_tag()
