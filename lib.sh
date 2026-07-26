@@ -40,15 +40,15 @@ generate_dirlist()
 	local directory="$1"
 
 	for dir in "$directory"/*/; do
-		local dirname=$(basename $dir)
+		local dirname=$(basename "$dir")
 		generate_tag h2 "$(generate_link "./$dirname/" "./$dirname/")"
-		echo "<br>"
+		printf '<br>\n'
 	done
 	for file in "$directory"/*; do
-		local filename=$(basename $file)
+		local filename=$(basename "$file")
 		if [ -f "$file" ] && [ "$filename" != "index.html" ]; then
 			generate_tag h2 "$(generate_link "./$filename" "./$filename")"
-			echo "<br>"
+			printf '<br>'
 		fi
 	done
 }

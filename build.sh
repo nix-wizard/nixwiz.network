@@ -10,9 +10,9 @@ if [ -d "$htdocs" ]; then
 else
 	mkdir "$htdocs"
 fi
-www_root="$(cd htdocs && pwd)"
-cp -r ./static/* $www_root/
-cd $www_root
+www_root="$(cd "$htdocs" && pwd)"
+cp -r ./static/* "$www_root"/
+cd "$www_root"
 
 # BLOG GENERATION
 # year list
@@ -34,22 +34,22 @@ for yeardir in ./blog/*/; do
 				post=$(<"$postdir/post.html")
 				title=$(<"$postdir/title")
 				description=$(<"$postdir/description")
-				echo "$date" > "$postdir/date"
+				printf '%s\n' "$date" > "$postdir/date"
 				generate_page " $(generate_tag h1 "$title") $(generate_tag p "$date") $(generate_tag h3 "$description") <hr> $post" "$title" > "$postdir/index.html"
 			done
 		done
 	done
 done
 # blog page
-echo "<ul>" >> ./pages/blog/index.html
+printf '<ul>\n' >> ./pages/blog/index.html
 find ./blog/ -type f -name 'post.html' | sort -r | while IFS= read -r file; do
 	dir=$(dirname "$file")
 	title=$(<"$dir/title")
 	date=$(<"$dir/date")
-	postdir="/blog/$(echo "$date" | replace_all "-" "/")/$(basename "$dir")/" # there has gotta be a better way to do this
-	generate_tag li "$(generate_tag h2 "$(generate_link "$(echo "$date") - $(echo "$title")" "$postdir")")" >> ./pages/blog/index.html
+	postdir="/blog/$(printf '%s\n' "$date" | replace_all "-" "/")/$(basename "$dir")/" # there has gotta be a better way to do this
+	generate_tag li "$(generate_tag h2 "$(generate_link "$(printf '%s\n' "$date") - $(printf '%s\n' "$title")" "$postdir")")" >> ./pages/blog/index.html
 done
-echo "</ul>" >> ./pages/blog/index.html
+printf '</ul>\n' >> ./pages/blog/index.html
 
 # iterate through all of the pages & generate html files for them
 for dir in ./pages/*/; do
