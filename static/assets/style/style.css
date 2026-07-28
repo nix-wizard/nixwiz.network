@@ -84,7 +84,7 @@ object {
 
 #content {
 	display: flex;
-	width: 60vw;
+	width: 70vw;
 	height: 85vh;
 	min-width: 800px;
 }
@@ -93,34 +93,16 @@ object {
 	background-color: #000000;
 }
 
-#navbar {
+#navbar, #comments {
 	border: 2px solid #FF0000;
 	width: 20%;
 	height: 90%;
 	margin-top: auto;
-	display: flex;
+	padding: 1% 1%;
 }
 
-#navbar-label {
-	width: 20%;
-	height: 100%;
-	text-align: center;
-	padding-top: 10%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	letter-spacing: 20px;
-}
-
-#navbar-label > h1 {
-	transform: rotate(270deg);
-}
-
-#navbar-content {
-	width: 80%;
-	height: 100%;
-	padding: 2% 5%;
-	text-align: center;
+#navbar > hr, #comments > hr {
+	border: 1px solid #FF0000;
 }
 
 #main {
@@ -132,7 +114,6 @@ object {
 }
 
 #title {
-	text-align: center;
 	height: 10%;
 	padding: 0 5%;
 }
@@ -149,10 +130,10 @@ object {
 	font-family: "Tahoma"
 }
 
-textarea {
+textarea, input {
 	background-color: #333333;
 	color: #CCCCCC;
-	border: 1px solid #6600FF;
+	border: 1px solid #FFFFFF;
 }
 
 a:link {

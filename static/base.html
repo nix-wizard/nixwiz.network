@@ -8,26 +8,39 @@
 	<body>
 		<div id="content">
 			<div id="navbar">
-				<div id="navbar-label">
-					<h1>navigation</h1>
-				</div>
-				<div id="navbar-content">
-					<h2><a href="/index.html">index</a></h2>
-					<h2><a href="/about.html">about</a></h2>
-					<h2><a href="/blog.html">blog</a></h2>
-					<h2><a href="/socials.html">socials</a></h2>
-					<h2><a href="/sonagallery.html">sona gallery</a></h2>
-				</div>
+				<h1 class="centered-text">navigation</h1>
+				<hr>
+				<h2 class="centered-text"><a href="/index.html">index</a></h2>
+				<h2 class="centered-text"><a href="/about.html">about</a></h2>
+				<h2 class="centered-text"><a href="/blog.html">blog</a></h2>
+				<h2 class="centered-text"><a href="/socials.html">socials</a></h2>
+				<h2 class="centered-text"><a href="/sonagallery.html">sona gallery</a></h2>
 			</div>
 			<div id="main">
 				<div id="title">
-					<h1><a href="/" id="title">nixwiz.network</a></h1>
+					<h1 class="centered-text"><a href="/" id="title">nixwiz.network</a></h1>
 					<hr>
 				</div>
 				<img src="/assets/image/under-construction.gif" title="under construction!" alt="under construction!">
 				<div id="page">
 					<!-- CONTENT -->
 				</div>
+			</div>
+			<div id="comments">
+				<h1 class="centered-text">comments</h1>
+				<hr>
+				<div id="commentinput">
+					<p>leave a comment!</p>
+					<iframe name="commentdummy" id="commentdummy" style="display: none;"></iframe>
+					<form action="/cgi-bin/comment.cgi?page=<!-- PAGE -->" method="POST" target="commentdummy">
+						<label for="name">name:</label><br>
+						<input style="width: 100%;" type="text" rows="1" maxlength="32" id="name" name="name"></textarea><br>
+						<label for="comment">comment:</label><br>
+						<textarea style="resize: vertical; width: 100%;" rows="4" maxlength="256" id="comment" name="comment"></textarea><br>
+						<input type="submit" name="Submit" value="Submit">
+					</form>
+				</div>
+				<hr>
 			</div>
 		</div>
 	</body>

@@ -16,7 +16,7 @@ replace_all()
 
 path_to_url()
 {
-	string="$1"
+	local string="${1//\/\//\/}" # uh
 	printf '%s' "${string:1}"
 }
 
@@ -65,7 +65,10 @@ generate_page()
 {
 	local content="$1"
 	local title="$2"
+	local page="$3"
 
-	replace_all "<!-- CONTENT -->" "$content" < ./base.html | \
-	replace_all "<!-- TITLE -->" "$title"
+	replace_all '<!-- CONTENT -->' "$content" < ./base.html | \
+	replace_all '<!-- TITLE -->' "$title" | \
+	replace_all '<!-- PAGE -->' "$page"
+
 }
