@@ -4,6 +4,7 @@ set -euo pipefail
 shopt -s nullglob
 
 origin="https://nixwiz.network"
+server_name="nixwiz.network"
 
 stylesheet='<link rel="stylesheet" href="/assets/style/style.css">'
 

@@ -12,7 +12,7 @@ if [[ "${HTTP_SEC_FETCH_SITE-}" != "same-origin" ]]; then
 	return_status "403" "forbidden: requires valid Sec-Fetch-Site header"
 fi
 
-cd ../../comments
+cd /var/lib/"$server_name"/comments
 
 declare -A queries
 declare -A body
@@ -33,7 +33,7 @@ if [[ "$target" != "$root/"* && "$target" != "$root" ]]; then
 	return_status "400" "bad request: fuck off!!!!"
 fi
 # make sure the page actually exists
-if [ ! -f "../htdocs/$page" ]; then
+if [ ! -f "/var/www/$server_name/htdocs/$page" ]; then
 	return_status "400" "bad request: not a page"
 fi
 name="$(url_decode "${body[name]}")"

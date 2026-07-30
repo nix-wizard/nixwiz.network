@@ -9,7 +9,7 @@ if [[ "${REQUEST_METHOD-}" != "GET" ]]; then
 	return_status "403" "forbidden: not a GET"
 fi
 
-cd ../../comments
+cd /var/lib/"$server_name"/comments
 
 declare -A queries
 parse_values "${QUERY_STRING-}" queries
@@ -26,7 +26,7 @@ if [[ "$target" != "$root/"* && "$target" != "$root" ]]; then
 	return_status "400" "bad request: fuck off!!!!"
 fi
 # make sure the page actually exists
-if [ ! -f "../htdocs/$page" ]; then
+if [ ! -f "/var/www/$server_name/htdocs/$page" ]; then
 	return_status "400" "bad request: page does not exist"
 fi
 
