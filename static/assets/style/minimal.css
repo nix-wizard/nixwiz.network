@@ -1,0 +1,40 @@
+@font-face {
+	font-family: "Tahoma";
+	font-weight: normal;
+	src:
+		local("Tahoma"),
+		url("/assets/font/tahoma.ttf")
+}
+
+@font-face {
+	font-family: "Tahoma";
+	font-weight: bold;
+	src:
+		local("Tahoma"),
+		url("/assets/font/tahomabd.ttf")
+}
+
+* {
+	image-rendering: optimizeSpeed;
+	image-rendering: pixelated;
+	font-smooth: never;
+	font-synthesis-weight: none;
+	shape-rendering: crispEdges;
+	shape-rendering: optimizeSpeed;
+	text-rendering: optimizeSpeed;
+	box-sizing: border-box;
+	-webkit-text-size-adjust: none;
+	-moz-text-size-adjust: none;
+	-ms-text-size-adjust: none;
+}
+
+body {
+	background-color: #000000;
+	color: #FFFFFF;
+	text-align: center
+	height: 100vh;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	font-family: "Tahoma";
+}
