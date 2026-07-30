@@ -3,8 +3,13 @@
 set -euo pipefail
 shopt -s nullglob
 
-replace_all()
-{
+origin="https://nixwiz.network"
+
+stylesheet='<link rel="stylesheet" href="/assets/style/style.css">'
+
+clrf=$'\r\n'
+
+replace_all() {
 	local placeholder=$1
 	local replacement=$2
 	local content
@@ -12,12 +17,6 @@ replace_all()
 	replacement=${replacement//&/\\&}
 	content=$(</dev/stdin)
 	printf '%s\n' "${content//$placeholder/$replacement}"
-}
-
-path_to_url()
-{
-	local string="${1//\/\//\/}" # uh
-	printf '%s' "${string:1}"
 }
 
 generate_tag()
@@ -66,9 +65,68 @@ generate_page()
 	local content="$1"
 	local title="$2"
 	local page="$3"
-
+	
 	replace_all '<!-- CONTENT -->' "$content" < ./base.html | \
 	replace_all '<!-- TITLE -->' "$title" | \
 	replace_all '<!-- PAGE -->' "$page"
+}
 
+path_to_url()
+	{
+		string="$1"
+		local string="${1//\/\//\/}" # uh
+		printf '%s' "${string:1}"
+	}
+
+
+header() {
+	printf '%s%s' "$1" "$clrf"
+}
+
+url_decode() {
+	local data="${1//+/ }"
+	printf '%b' "${data//%/\\x}"
+}
+
+parse_values() {
+	local input="$1"
+	local -n result="$2"
+
+	local pair key value
+	local IFS='&'
+
+	read -ra pairs <<<"$input"
+
+	for pair in "${pairs[@]}"; do
+		IFS='=' read -r key value <<<"$pair"
+		result["$key"]="$value"
+	done
+}
+
+
+return_status() {
+	header "Status: $1"
+	header 'Content-Type: text/html'
+	header ''
+	printf '<p>%s</p>\n' "$2"
+	exit
+}
+
+assert_var() {
+	if [ -z "$1" ]; then
+		return_status "400" "bad request"
+	fi
+}
+
+html_escape() {
+	local s
+	s=$(</dev/stdin)
+
+	s=${s//&/\&amp;}
+	s=${s//</\&lt;}
+	s=${s//>/\&gt;}
+	s=${s//\"/\&quot;}
+	s=${s//\'/\&#39;}
+
+	printf '%s' "$s"
 }
