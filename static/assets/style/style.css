@@ -47,6 +47,7 @@ body {
 	margin: 0;
 	overflow: hidden;
 	font-family: "Tahoma";
+	scrollbar-width: thin;
 }
 
 h1 {
@@ -99,6 +100,8 @@ object {
 	height: 90%;
 	margin-top: auto;
 	padding: 1% 1%;
+	overflow: scroll;
+	scrollbar-color: #FF0000 #000000;
 }
 
 #navbar > hr, #comments > hr {
@@ -125,7 +128,6 @@ object {
 	margin: 0;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	scrollbar-width: thin;
 	scrollbar-color: #6600FF #000000;
 	font-family: "Tahoma"
 }
