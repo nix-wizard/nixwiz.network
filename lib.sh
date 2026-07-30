@@ -6,7 +6,7 @@ shopt -s nullglob
 origin="https://nixwiz.network"
 server_name="nixwiz.network"
 
-stylesheet='<link rel="stylesheet" href="/assets/style/style.css">'
+stylesheet='<link rel="stylesheet" href="/assets/style/minimal.css">'
 
 clrf=$'\r\n'
 
@@ -109,7 +109,8 @@ return_status() {
 	header "Status: $1"
 	header 'Content-Type: text/html'
 	header ''
-	printf '<p>%s</p>\n' "$2"
+	printf '%s\n' "$stylesheet"
+	printf '<p style="color: #FF0000;"">%s</p>\n' "$2"
 	exit
 }
 

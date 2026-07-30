@@ -76,4 +76,5 @@ printf '%s' "$timestamp" > timestamp
 header 'Content-Type: text/html'
 header ''
 
-printf '<p>success!</p>\n'
+printf '%s\n' "$stylesheet"
+printf '<p style="color: #00FF00">success!</p>\n'
