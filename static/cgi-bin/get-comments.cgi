@@ -8,10 +8,6 @@ shopt -s nullglob
 if [[ "${REQUEST_METHOD-}" != "GET" ]]; then
 	return_status "403" "forbidden: not a GET"
 fi
-# CSRF "protection"
-if [[ "${HTTP_SEC_FETCH_SITE-}" != "same-origin" ]]; then
-	return_status "403" "forbidden: requires valid Sec-Fetch-Site header"
-fi
 
 cd ../../comments
 
