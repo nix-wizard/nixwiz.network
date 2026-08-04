@@ -60,6 +60,6 @@ for dir in ./pages/*/; do
 	generate_page "$(<"$dir/index.html")" "$page" "$page".html > "$page".html
 done
 
-find . -type d -exec chmod 755 {} \;
-find . -type f -exec chmod 644 {} \;
-find ./cgi-bin -type f -exec chmod 755 {} \;
+find . -type d -exec chmod 775 {} \;
+find . -type f -exec chmod 664 {} \;
+find ./cgi-bin -type f -exec chmod 775 {} \;
