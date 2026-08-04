@@ -74,16 +74,16 @@ else
 	cd "./$page/$reply/replies"
 fi
 
-if [ -e "./by-ip/$ip" ]; then # if this ip has already posted
+if [ -h "./by-ip/$ip" ] || [ -e "./by-ip/$ip" ]; then # if this ip has already posted
 	old_timestamp=$(<"./by-ip/$ip/timestamp")
 	rm -rf "./$old_timestamp/"
 	rm -rf "./by-ip/$ip"
 fi
 
 mkdir -p "./by-ip"
-ln -s "./$timestamp" "./by-ip/$ip"
-
 mkdir -p "./$timestamp"
+ln -s "$(realpath "./$timestamp")" "./by-ip/$ip"
+
 cd "./$timestamp"
 
 printf '%s' "$page" > page
