@@ -59,7 +59,11 @@ fi
 if printf '%s' "$comment" | grep -q '[[:cntrl:]]'; then
 	return_status "400" "invalid characters"
 fi
-ip="${HTTP_X_REAL_IP-}" # ONLY CORRECT WHEN BEHIND THE REVERSE PROXY
+
+if [[ -z "${HTTP_X_REAL_IP-}" ]]; then # ONLY FOR TEST ENVIRONMENT WHEN NOT BEHIND REVERSE PROXY
+	HTTP_X_REAL_IP="${REMOTE_ADDR-}"
+fi
+ip="${HTTP_X_REAL_IP}" # ONLY CORRECT WHEN BEHIND THE REVERSE PROXY
 timestamp="$(date +%s%N)"
 
 if [ "$reply" == "root" ]; then

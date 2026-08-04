@@ -42,7 +42,7 @@ commentdirs=(./"$page"/*/)
 for ((i=${#commentdirs[@]}-1; i>=0; i--)); do
 	if [ "$(basename "${commentdirs[$i]}")" != "by-ip" ]; then
 		timestamp="$(<"${commentdirs[$i]}/timestamp")"
-		date="$(date -d "@$((timestamp / 1000000000))" --iso-8601)"
+		date="$(timestamp_to_date "$timestamp")"
 		
 		printf '<p>%s said:</p>\n' "$(html_escape < "${commentdirs[$i]}/name")"
 		printf '<p>%s</p>\n' "$(html_escape < "${commentdirs[$i]}/comment")"
@@ -59,7 +59,7 @@ for ((i=${#commentdirs[@]}-1; i>=0; i--)); do
 		for ((j=${#replydirs[@]}-1; j>=0; j--)); do
 			if [ "$(basename "${replydirs[$j]}")" != "by-ip" ]; then
 				timestamp="$(<"${replydirs[$j]}/timestamp")"
-				date="$(date -d "@$((timestamp / 1000000000))" --iso-8601)"
+				date="$(timestamp_to_date "$timestamp")"
 				
 				printf '<div class="reply">\n'
 					printf '<p>%s replied:</p>\n' "$(html_escape < "${replydirs[$j]}/name")"

@@ -132,3 +132,14 @@ html_escape() {
 
 	printf '%s' "$s"
 }
+
+timestamp_to_date() {
+	local timestamp=$1
+	if [[ "$(date -r 0 +%s 2>/dev/null)" == "0" ]]; then
+		# BSD date
+		date -r "$((timestamp / 1000000000))" +%F
+	else
+		# GNU date
+		date -d "@$((timestamp / 1000000000))" +%F
+	fi
+}
