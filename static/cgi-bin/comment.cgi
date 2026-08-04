@@ -19,6 +19,7 @@ declare -A body
 parse_values "${QUERY_STRING-}" queries
 parse_values "$(</dev/stdin)" body
 assert_var "${queries[page]-}"
+assert_var "${queries[reply]-}"
 assert_var "${body[name]-}"
 assert_var "${body[comment]-}"
 page="$(url_decode "${queries[page]-}")"
@@ -35,6 +36,12 @@ fi
 # make sure the page actually exists
 if [ ! -f "/var/www/$server_name/htdocs/$page" ]; then
 	return_status "400" "bad request: not a page"
+fi
+reply="$(url_decode "${queries[reply]-}")"
+if [ "$reply" != "root" ]; then
+	if [ ! -d "./$page/$reply" ] || [ "$reply" == "by-ip" ]; then
+		return_status "400" "bad request: not a reply"
+	fi
 fi
 name="$(url_decode "${body[name]}")"
 comment="$(url_decode "${body[comment]}")"
@@ -55,17 +62,25 @@ fi
 ip="${HTTP_X_REAL_IP-}" # ONLY CORRECT WHEN BEHIND THE REVERSE PROXY
 timestamp="$(date +%s%N)"
 
-if [ -e "./$page/by-ip/$ip" ]; then # if this ip has already posted
-	old_timestamp=$(<"./$page/by-ip/$ip/timestamp")
-	rm -rf "./$page/$old_timestamp/"
-	rm -rf "./$page/by-ip/$ip"
+if [ "$reply" == "root" ]; then
+	mkdir -p "./$page"
+	cd "./$page"
+else
+	mkdir -p "./$page/$reply/replies"
+	cd "./$page/$reply/replies"
 fi
 
-mkdir -p "./$page/by-ip"
-ln -s "../$timestamp" "./$page/by-ip/$ip"
+if [ -e "./by-ip/$ip" ]; then # if this ip has already posted
+	old_timestamp=$(<"./by-ip/$ip/timestamp")
+	rm -rf "./$old_timestamp/"
+	rm -rf "./by-ip/$ip"
+fi
 
-mkdir -p "./$page/$timestamp"
-cd "./$page/$timestamp"
+mkdir -p "./by-ip"
+ln -s "./$timestamp" "./by-ip/$ip"
+
+mkdir -p "./$timestamp"
+cd "./$timestamp"
 
 printf '%s' "$page" > page
 printf '%s' "$name" > name

@@ -51,23 +51,23 @@ body {
 }
 
 h1 {
-	font-size: 28px;
+	font-size: 20pt;
 	font-family: "Terminus";
 }
 
 h2 {
-	font-size: 24px;
+	font-size: 18pt;
 	font-family: "Terminus";
 }
 
 h3 {
-	font-size: 22px;
+	font-size: 16pt;
 	font-family: "Terminus";
 }
 
 p {
 	white-space: pre-wrap;
-	font-size: 16px;
+	font-size: 12pt;
 }
 
 hr {
@@ -104,8 +104,19 @@ object {
 	scrollbar-color: #FF0000 #000000;
 }
 
-#navbar > hr, #comments > hr {
+#navbar hr, #comments hr {
 	border: 1px solid #FF0000;
+}
+
+.reply {
+	border-left: 2px solid #FF0000;
+	border-bottom: 2px solid #FF0000;
+	margin-left: 1ch;
+	padding-left: 1ch;
+}
+
+input[type="checkbox"]:checked + .replybox {
+    display: block;
 }
 
 #main {
@@ -132,10 +143,16 @@ object {
 	font-family: "Tahoma"
 }
 
-textarea, input {
+textarea, input, .fake-button {
 	background-color: #333333;
 	color: #CCCCCC;
 	border: 1px solid #FFFFFF;
+}
+
+.fake-button {
+	padding: 0% 2%;
+	cursor: pointer;
+	user-select: none;
 }
 
 a:link {
@@ -220,3 +237,8 @@ code {
 .undecorated-link a {
 	text-decoration: none;
 	color: #FFFFFF;
+}
+
+.invisible {
+	display: none;
+}

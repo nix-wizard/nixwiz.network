@@ -1,0 +1,13 @@
+<p>hello, i'm back again. this time, i've implemented replies on top of the current commenting system. the process was relatively straightforward.
+
+replies are stored under each comment, which means that you get one reply for every comment. if you have a comment on a page, it won't be overwritten by a reply.
+
+the most annoying part about setting this up was figuring out how to get the "reply" button on each comment to toggle showing the replybox without using javascript. i ended up doing some absurd css fuckery, where the "button" is actually just a label for an invisible checkbox that determines whether the reply box in front of it is visible or not.
+
+to modularize the "comment box" system i made a <code>commentbox.cgi</code> script that generates one for a comment or reply to a comment. the result of this is that on every page load, <code>/cgi-bin/commentbox.cgi</code> is hammered with an amount of requests equal to the amount of comments on the loaded page. this is obviously suboptimal, but i couldn't figure out a non-javascript way to deal with this issue. i tried putting a link in the label that points the replybox's iframe to the script only when it's pressed, but doing this ended up making the label not actually toggle the checkbox. i didn't poke further at this, it's sort of a non-issue because my cgi scripts are pretty lightweight anyways.
+
+the way replies are stored is probably self-explanatory. it's the same as how comments are stored, except the folders are stored stored in a "replies" directory in each comment folder rather than page folder.
+
+thanks for reading. that's all for today
+
+~nix<p>

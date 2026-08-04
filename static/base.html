@@ -31,14 +31,7 @@
 				<hr>
 				<div id="commentinput">
 					<p>leave a comment!</p>
-					<form action="/cgi-bin/comment.cgi?page=<!-- PAGE -->" method="POST" target="commentdummy">
-						<label for="name">name:</label><br>
-						<input style="width: 100%;" type="text" rows="1" maxlength="32" id="name" name="name"></textarea><br>
-						<label for="comment">comment:</label><br>
-						<textarea style="resize: vertical; width: 100%;" rows="4" maxlength="256" id="comment" name="comment"></textarea><br>
-						<iframe name="commentdummy" width="100%" id="commentdummy" frameborder="0" height="32px"></iframe>
-						<input type="submit" name="Submit" value="Submit">
-					</form>
+					<iframe width="100%" height="200px" frameborder="0" src="/cgi-bin/commentbox.cgi?page=<!-- PAGE -->&reply=root"></iframe>
 				</div>
 				<hr>
 				<!--#include virtual="/cgi-bin/get-comments.cgi?page=<!-- PAGE -->"-->

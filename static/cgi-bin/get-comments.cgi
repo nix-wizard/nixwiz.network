@@ -38,11 +38,35 @@ if [[ ! -d "./$page/" || -z "$(ls "./$page/")" ]]; then
 	exit
 fi
 
-ls -d ./"$page"/*/ | sort -r | while IFS= read -r commentdir; do
-	if [ "$(basename "$commentdir")" != "by-ip" ]; then
+commentdirs=(./"$page"/*/)
+for ((i=${#commentdirs[@]}-1; i>=0; i--)); do
+	if [ "$(basename "${commentdirs[$i]}")" != "by-ip" ]; then
+		timestamp="$(<"${commentdirs[$i]}/timestamp")"
+		date="$(date -d "@$((timestamp / 1000000000))" --iso-8601)"
+		
+		printf '<p>%s said:</p>\n' "$(html_escape < "${commentdirs[$i]}/name")"
+		printf '<p>%s</p>\n' "$(html_escape < "${commentdirs[$i]}/comment")"
+		printf '<p>%s</p>\n' "$date"
+		printf '<label class="fake-button" for="replycheck-%s">reply</label>\n' "$timestamp"
+		printf '<input class="invisible" type="checkbox" id="replycheck-%s">\n' "$timestamp"
+		printf '<div class="invisible replybox reply">\n'
+			printf '<p>leave a reply!</p>\n'
+			printf '<iframe name="replybox-%s" width="100%%" height="200px" frameborder="0" src="/cgi-bin/commentbox.cgi?page=%s&reply=%s"></iframe>\n' "$timestamp" "$page" "$timestamp"
+		printf '</div>\n'
 		printf '<hr>\n'
-		printf '<p>%s said:</p>\n' "$(html_escape < "$commentdir/name")"
-		printf '<p>%s</p>\n' "$(html_escape < "$commentdir/comment")"
+		
+		replydirs=("${commentdirs[$i]}"/replies/*/)
+		for ((j=${#replydirs[@]}-1; j>=0; j--)); do
+			if [ "$(basename "${replydirs[$j]}")" != "by-ip" ]; then
+				timestamp="$(<"${replydirs[$j]}/timestamp")"
+				date="$(date -d "@$((timestamp / 1000000000))" --iso-8601)"
+				
+				printf '<div class="reply">\n'
+					printf '<p>%s replied:</p>\n' "$(html_escape < "${replydirs[$j]}/name")"
+					printf '<p>%s</p>\n' "$(html_escape < "${replydirs[$j]}/comment")"
+					printf '<p>%s</p>\n' "$date"
+				printf '</div>\n'
+			fi
+		done
 	fi
 done
-printf '<hr>\n'

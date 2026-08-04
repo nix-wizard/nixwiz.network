@@ -38,3 +38,13 @@ body {
 	overflow: hidden;
 	font-family: "Tahoma";
 }
+
+textarea, input {
+	background-color: #333333;
+	color: #CCCCCC;
+	border: 1px solid #FFFFFF;
+}
+
+p {
+	font-size: 12pt;
+}
