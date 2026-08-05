@@ -22,6 +22,7 @@ assert_var "${queries[page]-}"
 assert_var "${queries[reply]-}"
 assert_var "${body[name]-}"
 assert_var "${body[comment]-}"
+assert_var "${body[reply]-}"
 page="$(url_decode "${queries[page]-}")"
 # prevents comments from the folder itself instead of index.html from being separate
 if [[ $page != *".html" ]]; then
